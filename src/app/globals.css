@@ -13,8 +13,8 @@
   --color-bg: var(--bg);
   --color-peach: var(--peach);
   --color-peach-dim: var(--peach-dim);
-  --font-display: var(--font-syne);
-  --font-body: var(--font-dm-sans);
+  --font-display: var(--font-inter);
+  --font-body: var(--font-inter);
 }
 
 *,
@@ -32,7 +32,7 @@ html {
 }
 
 body {
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   background-color: var(--bg);
   color: var(--peach);
   -webkit-font-smoothing: antialiased;

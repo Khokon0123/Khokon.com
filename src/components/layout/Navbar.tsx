@@ -3,13 +3,13 @@
 export default function Navbar() {
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-8"
+      className="fixed top-5 left-0 right-0 z-50 flex items-center justify-between px-10 pr-28 py-8"
       aria-label="Primary navigation"
     >
       {/* Wordmark — left */}
       <span
-        className="text-base font-semibold tracking-wide"
-        style={{ fontFamily: "var(--font-syne)", color: "var(--peach)" }}
+        className="text-base font-bold tracking-wide"
+        style={{ fontFamily: "var(--font-inter)", color: "var(--peach)" }}
       >
         Khokon
         <span style={{ color: "#5b6cf6", margin: "0 1px" }}>•</span>
@@ -29,7 +29,7 @@ export default function Navbar() {
         <a
           href="#about"
           className="px-5 py-2.5 text-base rounded-full transition-colors duration-200 hover:bg-white/10"
-          style={{ fontFamily: "var(--font-dm-sans)", color: "var(--peach)" }}
+          style={{ fontFamily: "var(--font-inter)", color: "var(--peach)" }}
         >
           About
         </a>
@@ -40,7 +40,7 @@ export default function Navbar() {
           style={{
             background: "rgba(91, 108, 246, 0.25)",
             border: "1px solid rgba(91, 108, 246, 0.4)",
-            fontFamily: "var(--font-syne)",
+            fontFamily: "var(--font-inter)",
             color: "#7b8cf8",
           }}
         >
@@ -50,7 +50,7 @@ export default function Navbar() {
         <a
           href="#work"
           className="px-5 py-2.5 text-base rounded-full transition-colors duration-200 hover:bg-white/10"
-          style={{ fontFamily: "var(--font-dm-sans)", color: "var(--peach)" }}
+          style={{ fontFamily: "var(--font-inter)", color: "var(--peach)" }}
         >
           Work
         </a>
@@ -59,7 +59,7 @@ export default function Navbar() {
       {/* Social links — right */}
       <div
         className="flex items-center gap-7 text-base"
-        style={{ fontFamily: "var(--font-dm-sans)", color: "var(--peach)" }}
+        style={{ fontFamily: "var(--font-inter)", color: "var(--peach)" }}
       >
         <a
           href="mailto:"
@@ -89,7 +89,7 @@ export default function Navbar() {
           rel="noopener noreferrer"
           className="opacity-70 hover:opacity-100 transition-opacity duration-200"
         >
-          gh
+          GitHub
         </a>
       </div>
     </nav>

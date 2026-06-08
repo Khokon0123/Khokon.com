@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { syne, dmSans } from "@/lib/fonts";
+import { inter } from "@/lib/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,9 +15,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${dmSans.variable} h-full antialiased`}
+      className={`${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-bg text-peach">{children}</body>
+      <body className="min-h-full bg-bg text-peach" suppressHydrationWarning>{children}</body>
     </html>
   );
 }

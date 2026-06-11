@@ -228,9 +228,8 @@ export default function Hero() {
             className="opacity-0 tracking-widest uppercase"
             style={{
               fontFamily: "var(--font-inter)",
-              fontWeight: 600,
-              fontSize: "clamp(16px, 1.6vw, 26px)",
               fontWeight: 800,
+              fontSize: "clamp(16px, 1.6vw, 26px)",
               color: "var(--peach)",
               height: "clamp(30px, 4vh, 48px)",
               display: "flex",

@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 // Replace bg with backgroundImage: "url('/images/projects/name.jpg')" + backgroundSize: "cover" when ready
 const cards = [
-  { bg: "linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%)" },
+  { bg: "url('/images/onlyswap.png')" },
   { bg: "linear-gradient(145deg, #3040d8 0%, #e04828 60%, #f07030 100%)" },
   { bg: "linear-gradient(145deg, #e86020 0%, #d04810 50%, #f08840 100%)" },
   { bg: "linear-gradient(145deg, #a8e040 0%, #30b870 40%, #60d8a0 100%)" },
@@ -123,36 +123,122 @@ export default function BrandShowcase() {
           marginBottom: "clamp(32px, 5vw, 72px)",
         }}
       >
-        End-to-end products built for scale, speed,
+        OnlySwap, Campus Room Booking, and more —
         <br />
-        and real user value.
+        shipped products with real users and measurable impact.
       </p>
 
-      {/* Square cards — all equal size */}
+      {/* Grid: 5 equal columns — row 1 cards, row 2 info under first card only */}
       <div
-        className="flex items-stretch"
         style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(5, 1fr)",
           gap: "clamp(6px, 0.7vw, 12px)",
           paddingInline: "clamp(14px, 1.8vw, 28px)",
         }}
       >
+        {/* Row 1: all 5 cards — same height */}
         {cards.map((c, i) => (
           <div
             key={i}
             ref={(el) => { cardRefs.current[i] = el; }}
-            className="flex-1 cursor-pointer overflow-hidden"
+            className="cursor-pointer overflow-hidden"
             style={{
               aspectRatio: "1 / 1",
               borderRadius: "clamp(8px, 1vw, 14px)",
-              background: c.bg,
+              background: i === 0 ? "#e8f5e8" : i === 1 ? "#eef2f8" : c.bg,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              minWidth: 0,
               opacity: 0,
               willChange: "transform",
+              display: i === 0 || i === 1 ? "flex" : "block",
+              alignItems: "center",
+              justifyContent: "center",
             }}
-          />
+          >
+            {i === 0 && (
+              <video autoPlay muted loop playsInline style={{ width: "100%", display: "block" }}>
+                <source src="/videos/onlyswap.mov" type="video/quicktime" />
+                <source src="/videos/onlyswap.mov" type="video/mp4" />
+              </video>
+            )}
+            {i === 1 && (
+              <video autoPlay muted loop playsInline style={{ width: "100%", display: "block" }}>
+                <source src="/videos/roombooking.mov" type="video/quicktime" />
+                <source src="/videos/roombooking.mov" type="video/mp4" />
+              </video>
+            )}
+          </div>
         ))}
+
+        {/* Row 2: info only under first card, rest empty */}
+        <div style={{ paddingTop: "clamp(8px, 1vw, 14px)" }}>
+          <p style={{
+            fontFamily: "var(--font-inter)",
+            fontWeight: 800,
+            fontSize: "clamp(16px, 1.5vw, 26px)",
+            color: "#7a7068",
+            margin: 0,
+            lineHeight: 1.2,
+          }}>
+            OnlySwap
+          </p>
+          <p style={{
+            fontFamily: "var(--font-inter)",
+            fontWeight: 600,
+            fontSize: "clamp(12px, 1vw, 16px)",
+            color: "#7a7068",
+            opacity: 0.7,
+            margin: "clamp(4px, 0.5vw, 7px) 0 0",
+            lineHeight: 1.5,
+          }}>
+            2nd Place · Princeton Hackathon
+          </p>
+          <p style={{
+            fontFamily: "var(--font-inter)",
+            fontWeight: 500,
+            fontSize: "clamp(10px, 0.85vw, 13px)",
+            color: "#7a7068",
+            opacity: 0.5,
+            margin: "clamp(3px, 0.35vw, 5px) 0 0",
+          }}>
+            245+ users · $2,000 Prize · React Native
+          </p>
+        </div>
+        <div style={{ paddingTop: "clamp(8px, 1vw, 14px)" }}>
+          <p style={{
+            fontFamily: "var(--font-inter)",
+            fontWeight: 800,
+            fontSize: "clamp(16px, 1.5vw, 26px)",
+            color: "#7a7068",
+            margin: 0,
+            lineHeight: 1.2,
+          }}>
+            Room Booking
+          </p>
+          <p style={{
+            fontFamily: "var(--font-inter)",
+            fontWeight: 600,
+            fontSize: "clamp(12px, 1vw, 16px)",
+            color: "#7a7068",
+            opacity: 0.7,
+            margin: "clamp(4px, 0.5vw, 7px) 0 0",
+            lineHeight: 1.5,
+          }}>
+            OWU · 15+ Departments
+          </p>
+          <p style={{
+            fontFamily: "var(--font-inter)",
+            fontWeight: 500,
+            fontSize: "clamp(10px, 0.85vw, 13px)",
+            color: "#7a7068",
+            opacity: 0.5,
+            margin: "clamp(3px, 0.35vw, 5px) 0 0",
+          }}>
+            1,000+ users · 30% fewer conflicts
+          </p>
+        </div>
+        <div /><div /><div />
       </div>
     </section>
   );

@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Navbar from "@/components/layout/Navbar";
 
 export default function Hero() {
-  const navRef       = useRef<HTMLElement>(null);
   const softwareRef  = useRef<HTMLParagraphElement>(null);
   const ceoRef       = useRef<HTMLParagraphElement>(null);
   const khokonWrapRef = useRef<HTMLDivElement>(null);
@@ -24,15 +22,13 @@ export default function Hero() {
       if (!khokonText || !barauText) return;
 
       // Lock initial states before first paint
-      gsap.set(navRef.current,                          { y: -24, opacity: 0 });
-      gsap.set([softwareRef.current, ceoRef.current],   { opacity: 0 });
+      gsap.set([softwareRef.current, ceoRef.current], { opacity: 0 });
       gsap.set(cardRef.current,                         { scale: 0.82, opacity: 0 });
 
       ctx = gsap.context(() => {
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
         // ── Entrance sequence ──
-        tl.to(navRef.current,   { y: 0, opacity: 1, duration: 0.55 }, 0.1);
         tl.fromTo(khokonText,   { y: "110%" }, { y: "0%", duration: 1.05 }, 0.2);
         tl.fromTo(barauText,    { y: "110%" }, { y: "0%", duration: 1.05 }, 0.32);
         tl.to(cardRef.current,  { scale: 1, opacity: 1, duration: 0.85, ease: "power2.out" }, 0.42);
@@ -126,11 +122,6 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* Navbar */}
-      <header ref={navRef} className="opacity-0">
-        <Navbar />
-      </header>
-
       {/* Title — middle left */}
       <p
         ref={softwareRef}
@@ -190,9 +181,10 @@ export default function Hero() {
             className="rounded-xl overflow-hidden"
             style={{
               aspectRatio: "4/3",
-              background: "rgba(245, 201, 160, 0.07)",
+              backgroundImage: "url('/images/onlyswap.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "center top",
               border: "1px solid rgba(245, 201, 160, 0.14)",
-              backdropFilter: "blur(10px)",
             }}
           >
             <div
@@ -204,10 +196,10 @@ export default function Hero() {
             >
               <div className="w-8 h-0.5 rounded-full mb-2" style={{ background: "var(--peach)", opacity: 0.45 }} />
               <p className="text-xs font-medium" style={{ fontFamily: "var(--font-inter)", color: "var(--peach)", opacity: 0.65 }}>
-                Featured Project
+                OnlySwap
               </p>
               <p className="text-xs mt-0.5" style={{ fontFamily: "var(--font-inter)", color: "var(--peach)", opacity: 0.35 }}>
-                Drop screenshot here →
+                2nd Place · Princeton Hackathon
               </p>
             </div>
           </div>

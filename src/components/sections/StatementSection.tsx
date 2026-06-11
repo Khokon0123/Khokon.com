@@ -121,7 +121,7 @@ export default function StatementSection() {
 
           {/* Line 1 */}
           <div className="stmt-line" style={{ opacity: 0 }}>
-            <span style={textStyle}>2 years</span>
+            <span style={textStyle}>2+ years</span>
           </div>
 
           {/* Line 2 */}
@@ -157,12 +157,12 @@ export default function StatementSection() {
                     borderRadius: "999px",
                     fontFamily: "var(--font-inter)",
                     fontWeight: 700,
-                    fontSize: "clamp(16px, 1.6vw, 24px)",
+                    fontSize: "clamp(24px, 2.8vw, 42px)",
                     color: "#fff",
                     lineHeight: 1.25,
                     whiteSpace: "normal",
                     width: "max-content",
-                    maxWidth: "320px",
+                    maxWidth: "480px",
                     textAlign: "center",
                   }}
                 >

@@ -2,6 +2,7 @@ import Hero from "@/components/sections/Hero";
 import StatementSection from "@/components/sections/StatementSection";
 import ServicesSection from "@/components/sections/ServicesSection";
 import WorkShowcase from "@/components/sections/WorkShowcase";
+import LeadershipSection from "@/components/sections/LeadershipSection";
 import BrandShowcase from "@/components/sections/BrandShowcase";
 import ProductShowcase from "@/components/sections/ProductShowcase";
 import WorkCTA from "@/components/sections/WorkCTA";
@@ -15,6 +16,7 @@ export default function Home() {
       <StatementSection />
       <ServicesSection />
       <WorkShowcase />
+      <LeadershipSection />
       <BrandShowcase />
       <ProductShowcase />
       <WorkCTA />

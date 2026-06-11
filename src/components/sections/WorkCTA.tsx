@@ -247,9 +247,9 @@ export default function WorkCTA() {
             lineHeight: 1.75,
           }}
         >
-          Building performant, scalable web applications
+          React Native · Node.js · Firebase · Python · SQL
           <br />
-          with modern tooling and clean architecture.
+          from mobile apps to AI pipelines — shipped and in production.
         </p>
 
         {/* CTA */}

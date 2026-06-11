@@ -97,7 +97,7 @@ export default function CTASection() {
             color: textClr,
           }}
         >
-          from global tech companies to growing startups.
+          hackathon winner · GPA 3.89 · OWU Computer Science · Google AI certified
         </p>
       </div>
 

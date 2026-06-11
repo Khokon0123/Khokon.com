@@ -3,10 +3,10 @@
 import { useEffect, useRef } from "react";
 
 const statements = [
-  "I build high-performance platforms that make your product stand out.",
-  "I care about the craft, from architecture to final deployment.",
-  "I define clean, scalable systems that keep your codebase consistent.",
-  "I align your goals with my experience to make the right technical decisions for you.",
+  "I build production-ready platforms — from React Native mobile apps to full-stack web systems.",
+  "I care about the craft: clean architecture, robust APIs, and a deployment that actually holds up.",
+  "I move fast without breaking things — proven at Princeton Hackathon and in live IT systems serving 1,000+ users.",
+  "I align your goals with the right technical decisions to ship something people actually use.",
 ];
 
 // Each word is a separate span so they can appear one-by-one on scroll
@@ -251,7 +251,7 @@ export default function PhilosophySection() {
               margin: 0,
             }}
           >
-            I bring a unique technical direction that makes your product stand out.
+            From RAG AI pipelines to trading platforms, I bring the right technical direction to make your product stand out.
           </p>
         </div>
 

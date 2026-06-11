@@ -6,22 +6,22 @@ const services = [
   {
     line1: "Web Applications &",
     line2: "Full-Stack Platforms",
-    desc: "Building scalable, high-performance web applications from zero to launch.",
+    desc: "Building scalable web applications using React, Node.js, and Firebase — from zero to production.",
   },
   {
     line1: "Mobile Apps &",
     line2: "Cross-Platform Products",
-    desc: "Cross-platform mobile experiences that feel native and delight every user.",
+    desc: "Cross-platform mobile apps built with React Native — like OnlySwap, 245+ users in two weeks.",
   },
   {
     line1: "SaaS Platforms &",
     line2: "Software Products",
-    desc: "End-to-end SaaS platforms built for growth, reliability, and real users.",
+    desc: "End-to-end platforms built for real users — hackathon-proven and production-ready.",
   },
   {
     line1: "APIs &",
     line2: "Backend Systems",
-    desc: "Robust backend architecture and APIs that power modern digital products.",
+    desc: "Robust backend systems and REST APIs using Node.js and Firebase, built for scale and reliability.",
   },
 ];
 

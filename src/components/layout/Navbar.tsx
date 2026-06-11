@@ -62,13 +62,13 @@ export default function Navbar() {
         style={{ fontFamily: "var(--font-inter)", color: "var(--peach)" }}
       >
         <a
-          href="mailto:"
+          href="mailto:kbarua@owu.edu"
           className="opacity-70 hover:opacity-100 transition-opacity duration-200"
         >
           Email
         </a>
         <a
-          href="#"
+          href="https://www.linkedin.com/in/khokon-barua/"
           target="_blank"
           rel="noopener noreferrer"
           className="opacity-70 hover:opacity-100 transition-opacity duration-200"

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { inter } from "@/lib/fonts";
+import Navbar from "@/components/layout/Navbar";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,7 +18,10 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-bg text-peach" suppressHydrationWarning>{children}</body>
+      <body className="min-h-full bg-bg text-peach" suppressHydrationWarning>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

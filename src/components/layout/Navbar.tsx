@@ -1,96 +1,193 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 export default function Navbar() {
+  const wordmarkInnerRef = useRef<HTMLSpanElement>(null);
+  const pillInnerRef     = useRef<HTMLDivElement>(null);
+  const socialInnerRef   = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let ctx: any;
+
+    const init = async () => {
+      const gsap = (await import("gsap")).default;
+
+      // Each element starts below its clip container (same clip-reveal as the hero name)
+      gsap.set([wordmarkInnerRef.current, pillInnerRef.current, socialInnerRef.current], {
+        y: "110%",
+      });
+
+      ctx = gsap.context(() => {
+        // Rise up in sync with the curtain slide-up (curtain starts 1.87s, lasts 0.9s)
+        gsap.to(
+          [wordmarkInnerRef.current, pillInnerRef.current, socialInnerRef.current],
+          {
+            y: "0%",
+            duration: 0.9,
+            ease: "power3.out",
+            delay: 1.87,
+            stagger: 0.06,
+          }
+        );
+      });
+    };
+
+    init();
+    return () => ctx?.revert();
+  }, []);
+
   return (
     <nav
-      className="fixed top-5 left-0 right-0 z-50 flex items-center justify-between px-10 pr-28 py-8"
       aria-label="Primary navigation"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "18px 36px",
+        fontFamily: "var(--font-inter)",
+        overflow: "hidden",
+      }}
     >
-      {/* Wordmark — left */}
-      <span
-        className="text-base font-bold tracking-wide"
-        style={{ fontFamily: "var(--font-inter)", color: "var(--peach)" }}
-      >
-        Khokon
-        <span style={{ color: "#5b6cf6", margin: "0 1px" }}>•</span>
-        Barua
-      </span>
-
-      {/* Pill nav — center */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 flex items-center rounded-full px-2 py-2"
-        style={{
-          background: "var(--pill-bg)",
-          border: "1px solid var(--pill-border)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-        }}
-      >
-        <a
-          href="#about"
-          className="px-5 py-2.5 text-base rounded-full transition-colors duration-200 hover:bg-white/10"
-          style={{ fontFamily: "var(--font-inter)", color: "var(--peach)" }}
-        >
-          About
-        </a>
-
-        {/* Center logo icon */}
-        <div
-          className="w-10 h-10 rounded-full flex items-center justify-center text-base font-bold mx-0.5"
+      {/* Wordmark — left, clip container */}
+      <div style={{ overflow: "hidden", lineHeight: 1 }}>
+        <span
+          ref={wordmarkInnerRef}
           style={{
-            background: "rgba(91, 108, 246, 0.25)",
-            border: "1px solid rgba(91, 108, 246, 0.4)",
-            fontFamily: "var(--font-inter)",
-            color: "#7b8cf8",
+            display: "block",
+            fontWeight: 600,
+            fontSize: "13px",
+            letterSpacing: "0.01em",
+            color: "var(--peach)",
+            opacity: 0.9,
+            willChange: "transform",
           }}
         >
-          K
-        </div>
-
-        <a
-          href="#work"
-          className="px-5 py-2.5 text-base rounded-full transition-colors duration-200 hover:bg-white/10"
-          style={{ fontFamily: "var(--font-inter)", color: "var(--peach)" }}
-        >
-          Work
-        </a>
+          Khokon
+          <span style={{ color: "#5b8cf6", margin: "0 2px" }}>•</span>
+          Barua
+        </span>
       </div>
 
-      {/* Social links — right */}
+      {/* Pill nav — center, clip container */}
       <div
-        className="flex items-center gap-7 text-base"
-        style={{ fontFamily: "var(--font-inter)", color: "var(--peach)" }}
+        style={{
+          position: "absolute",
+          left: "50%",
+          transform: "translateX(-50%)",
+          overflow: "hidden",
+          padding: "2px 0 6px",
+        }}
       >
-        <a
-          href="mailto:kbarua@owu.edu"
-          className="opacity-70 hover:opacity-100 transition-opacity duration-200"
+        <div
+          ref={pillInnerRef}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            background: "rgba(16, 10, 5, 0.72)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            borderRadius: "100px",
+            padding: "5px 5px",
+            gap: "2px",
+            willChange: "transform",
+          }}
         >
-          Email
-        </a>
-        <a
-          href="https://www.linkedin.com/in/khokon-barua/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="opacity-70 hover:opacity-100 transition-opacity duration-200"
+          <a
+            href="#about"
+            style={{
+              padding: "8px 22px",
+              fontSize: "13px",
+              color: "var(--peach)",
+              opacity: 0.8,
+              borderRadius: "100px",
+              transition: "opacity 0.2s",
+              textDecoration: "none",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.8")}
+          >
+            About
+          </a>
+
+          {/* Center logo icon */}
+          <div
+            style={{
+              width: "38px",
+              height: "38px",
+              borderRadius: "10px",
+              background: "white",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <line x1="3"  y1="17" x2="17" y2="3"  stroke="#3b5ef0" strokeWidth="2.4" strokeLinecap="round"/>
+              <line x1="3"  y1="11" x2="11" y2="3"  stroke="#3b5ef0" strokeWidth="2.4" strokeLinecap="round"/>
+              <line x1="9"  y1="17" x2="17" y2="9"  stroke="#3b5ef0" strokeWidth="2.4" strokeLinecap="round"/>
+            </svg>
+          </div>
+
+          <a
+            href="#work"
+            style={{
+              padding: "8px 22px",
+              fontSize: "13px",
+              color: "var(--peach)",
+              opacity: 0.8,
+              borderRadius: "100px",
+              transition: "opacity 0.2s",
+              textDecoration: "none",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.8")}
+          >
+            Work
+          </a>
+        </div>
+      </div>
+
+      {/* Social links — right, clip container */}
+      <div style={{ overflow: "hidden", lineHeight: 1 }}>
+        <div
+          ref={socialInnerRef}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "24px",
+            fontSize: "13px",
+            color: "var(--peach)",
+            willChange: "transform",
+          }}
         >
-          in
-        </a>
-        <a
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="opacity-70 hover:opacity-100 transition-opacity duration-200"
-        >
-          x
-        </a>
-        <a
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="opacity-70 hover:opacity-100 transition-opacity duration-200"
-        >
-          GitHub
-        </a>
+          {[
+            { label: "Email",  href: "mailto:kbarua@owu.edu" },
+            { label: "in",     href: "https://www.linkedin.com/in/khokon-barua/", external: true },
+            { label: "x",      href: "#" },
+            { label: "GitHub", href: "https://github.com/Khokon0123", external: true },
+          ].map(({ label, href, external }) => (
+            <a
+              key={label}
+              href={href}
+              target={external ? "_blank" : undefined}
+              rel={external ? "noopener noreferrer" : undefined}
+              style={{ opacity: 0.65, transition: "opacity 0.2s", textDecoration: "none", color: "var(--peach)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.65")}
+            >
+              {label}
+            </a>
+          ))}
+        </div>
       </div>
     </nav>
   );

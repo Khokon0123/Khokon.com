@@ -3,8 +3,9 @@
 import { useEffect, useRef } from "react";
 
 export default function Hero() {
-  const softwareRef  = useRef<HTMLParagraphElement>(null);
-  const ceoRef       = useRef<HTMLParagraphElement>(null);
+  const softwareLine1Ref = useRef<HTMLSpanElement>(null);
+  const softwareLine2Ref = useRef<HTMLSpanElement>(null);
+  const ceoInnerRef      = useRef<HTMLSpanElement>(null);
   const khokonWrapRef = useRef<HTMLDivElement>(null);
   const barauWrapRef  = useRef<HTMLDivElement>(null);
   const cardRef       = useRef<HTMLDivElement>(null);
@@ -21,29 +22,24 @@ export default function Hero() {
       const barauText  = barauWrapRef.current?.querySelector<HTMLElement>(".name-text");
       if (!khokonText || !barauText) return;
 
-      // Lock initial states before first paint
-      gsap.set([softwareRef.current, ceoRef.current], { opacity: 0 });
-      gsap.set(cardRef.current,                         { scale: 0.82, opacity: 0 });
+      // Secondary text hidden; card starts small and scales up WITH the curtain slide
+      gsap.set([softwareLine1Ref.current, softwareLine2Ref.current, ceoInnerRef.current], { y: "115%" });
+      gsap.set(cardRef.current, { scale: 0.82 });
 
       ctx = gsap.context(() => {
-        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+        // Card scales up during the curtain slide (curtain starts at 1.87s, lasts 0.9s)
+        gsap.delayedCall(1.87, () => {
+          gsap.to(cardRef.current, { scale: 1, duration: 0.9, ease: "power2.inOut" });
+        });
 
-        // ── Entrance sequence ──
-        tl.fromTo(khokonText,   { y: "110%" }, { y: "0%", duration: 1.05 }, 0.2);
-        tl.fromTo(barauText,    { y: "110%" }, { y: "0%", duration: 1.05 }, 0.32);
-        tl.to(cardRef.current,  { scale: 1, opacity: 1, duration: 0.85, ease: "power2.out" }, 0.42);
-        tl.to(
-          [softwareRef.current, ceoRef.current],
-          { opacity: 1, duration: 0.6, stagger: 0.08 },
-          0.65
-        );
+        // After loader is fully gone (~2.77s), start secondary reveals + idle animations
+        gsap.delayedCall(2.8, () => {
+          // Clip reveal: Software → Engineer → CEO, staggered
+          gsap.to(softwareLine1Ref.current, { y: "0%", duration: 0.78, ease: "power3.out" });
+          gsap.to(softwareLine2Ref.current, { y: "0%", duration: 0.78, ease: "power3.out", delay: 0.1 });
+          gsap.to(ceoInnerRef.current,      { y: "0%", duration: 0.78, ease: "power3.out", delay: 0.18 });
 
-        // ── After entrance: open clip masks + start animations ──
-        tl.call(() => {
-          // Open overflow so cursor parallax isn't clipped
-          gsap.set([khokonWrapRef.current, barauWrapRef.current], { overflow: "visible" });
-
-          // Card float (Y axis only — X is reserved for cursor parallax)
+          // Card float (Y only — X reserved for parallax)
           gsap.to(cardRef.current, {
             y: -12,
             duration: 3,
@@ -52,37 +48,31 @@ export default function Hero() {
             repeat: -1,
           });
 
-          // ── Cursor parallax — quickTo for 60fps performance ──
-          const kX = gsap.quickTo(khokonText,    "x", { duration: 0.9, ease: "power3.out" });
-          const kY = gsap.quickTo(khokonText,    "y", { duration: 0.9, ease: "power3.out" });
-          const bX = gsap.quickTo(barauText,     "x", { duration: 0.9, ease: "power3.out" });
-          const bY = gsap.quickTo(barauText,     "y", { duration: 0.9, ease: "power3.out" });
+          // Cursor parallax — quickTo for 60fps smoothness
+          const kX = gsap.quickTo(khokonText,      "x", { duration: 0.9, ease: "power3.out" });
+          const kY = gsap.quickTo(khokonText,      "y", { duration: 0.9, ease: "power3.out" });
+          const bX = gsap.quickTo(barauText,       "x", { duration: 0.9, ease: "power3.out" });
+          const bY = gsap.quickTo(barauText,       "y", { duration: 0.9, ease: "power3.out" });
           const cX = gsap.quickTo(cardRef.current, "x", { duration: 1.1, ease: "power3.out" });
 
           onMouseMove = (e: MouseEvent) => {
-            const x = (e.clientX / window.innerWidth  - 0.5); // −0.5 → 0.5
-            const y = (e.clientY / window.innerHeight - 0.5);
-
-            // Both halves drift in the same direction — depth illusion
-            kX(x * 38);
-            kY(y * 18);
-            bX(x * 38);
-            bY(y * 18);
-
-            // Card drifts a bit more — feels closer to the viewer
+            const x = e.clientX / window.innerWidth  - 0.5;
+            const y = e.clientY / window.innerHeight - 0.5;
+            kX(x * 38); kY(y * 18);
+            bX(x * 38); bY(y * 18);
             cX(x * 58);
           };
 
           window.addEventListener("mousemove", onMouseMove);
         });
 
-        // ── Hover letter-spacing on name halves ──
+        // Hover letter-spacing (register immediately)
         const addHover = (el: HTMLElement) => {
           el.addEventListener("mouseenter", () =>
             gsap.to(el, { letterSpacing: "0.04em", opacity: 0.7, duration: 0.4, ease: "power2.out" })
           );
           el.addEventListener("mouseleave", () =>
-            gsap.to(el, { letterSpacing: "normal",  opacity: 1,   duration: 0.4, ease: "power2.out" })
+            gsap.to(el, { letterSpacing: "normal", opacity: 1, duration: 0.4, ease: "power2.out" })
           );
         };
         addHover(khokonText);
@@ -122,32 +112,50 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* Title — middle left */}
-      <p
-        ref={softwareRef}
-        className="absolute left-10 leading-tight opacity-0"
-        style={{
-          top: "24%",
-          fontFamily: "var(--font-inter)",
-          fontWeight: 700,
-          fontSize: "clamp(24px, 2.6vw, 38px)",
-          color: "var(--peach)",
-          lineHeight: 1.15,
-        }}
+      {/* Title — top left, clip-reveal per line after loader */}
+      <div
+        className="absolute left-10"
+        style={{ top: "24%", lineHeight: 1.15 }}
       >
-        Software<br />Engineer
-      </p>
+        <div style={{ overflow: "hidden" }}>
+          <span
+            ref={softwareLine1Ref}
+            style={{
+              display: "block",
+              fontFamily: "var(--font-inter)",
+              fontWeight: 700,
+              fontSize: "clamp(24px, 2.6vw, 38px)",
+              color: "var(--peach)",
+              willChange: "transform",
+            }}
+          >
+            Software
+          </span>
+        </div>
+        <div style={{ overflow: "hidden" }}>
+          <span
+            ref={softwareLine2Ref}
+            style={{
+              display: "block",
+              fontFamily: "var(--font-inter)",
+              fontWeight: 700,
+              fontSize: "clamp(24px, 2.6vw, 38px)",
+              color: "var(--peach)",
+              willChange: "transform",
+            }}
+          >
+            Engineer
+          </span>
+        </div>
+      </div>
 
       {/* ── Name row: Khokon | [card] | Barua + CEO ── */}
-      {/*
-       * pb-3 lifts content 12px off viewport bottom so CEO text isn't at the very edge.
-       * Left column has a spacer matching CEO row height so Khokon and Barua baselines align.
-       */}
+      {/* Name + card are in final position from page load — revealed by the loader curtain sliding up */}
       <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between px-6 pb-3">
 
-        {/* Left column: Khokon + spacer (keeps baseline level with Barua) */}
+        {/* Left column: Khokon + spacer */}
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div ref={khokonWrapRef} className="overflow-hidden" style={{ lineHeight: 0.88 }}>
+          <div ref={khokonWrapRef} style={{ lineHeight: 0.88, overflow: "visible" }}>
             <span
               className="name-text block font-black cursor-default select-none"
               style={{
@@ -155,22 +163,20 @@ export default function Hero() {
                 fontSize: "clamp(72px, 13.5vw, 220px)",
                 color: "var(--peach)",
                 lineHeight: 0.88,
-                transform: "translateY(110%)",
                 display: "block",
-                willChange: "transform, opacity, letter-spacing",
+                willChange: "transform, letter-spacing",
               }}
             >
               Khokon
             </span>
           </div>
-          {/* Spacer matches CEO row height so both name baselines are identical */}
           <div style={{ height: "clamp(30px, 4vh, 48px)" }} />
         </div>
 
-        {/* Floating project card */}
+        {/* Floating project card — in final position from load */}
         <div
           ref={cardRef}
-          className="relative flex-shrink-0 opacity-0"
+          className="relative flex-shrink-0"
           style={{
             width: "clamp(160px, 16vw, 280px)",
             marginBottom: "clamp(48px, 7vw, 110px)",
@@ -205,9 +211,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right column: Barua on top, CEO label below */}
+        {/* Right column: Barua + CEO */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-          <div ref={barauWrapRef} className="overflow-hidden" style={{ lineHeight: 0.88, width: "max-content" }}>
+          <div ref={barauWrapRef} style={{ lineHeight: 0.88, width: "max-content", overflow: "visible" }}>
             <span
               className="name-text block font-black text-right cursor-default select-none"
               style={{
@@ -215,30 +221,38 @@ export default function Hero() {
                 fontSize: "clamp(72px, 13.5vw, 220px)",
                 color: "var(--peach)",
                 lineHeight: 0.88,
-                transform: "translateY(110%)",
                 display: "block",
-                willChange: "transform, opacity, letter-spacing",
+                willChange: "transform, letter-spacing",
               }}
             >
               Barua
             </span>
           </div>
-          <p
-            ref={ceoRef}
-            className="opacity-0 tracking-widest uppercase"
+          {/* CEO — clip reveal after loader */}
+          <div
+            className="tracking-widest uppercase"
             style={{
-              fontFamily: "var(--font-inter)",
-              fontWeight: 800,
-              fontSize: "clamp(16px, 1.6vw, 26px)",
-              color: "var(--peach)",
               height: "clamp(30px, 4vh, 48px)",
               display: "flex",
               alignItems: "center",
               alignSelf: "flex-start",
+              overflow: "hidden",
             }}
           >
-            Chief Executive Officer
-          </p>
+            <span
+              ref={ceoInnerRef}
+              style={{
+                display: "block",
+                fontFamily: "var(--font-inter)",
+                fontWeight: 800,
+                fontSize: "clamp(16px, 1.6vw, 26px)",
+                color: "var(--peach)",
+                willChange: "transform",
+              }}
+            >
+              Chief Executive Officer
+            </span>
+          </div>
         </div>
       </div>
     </section>

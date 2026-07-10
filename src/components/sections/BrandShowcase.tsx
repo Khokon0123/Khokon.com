@@ -142,7 +142,7 @@ export default function BrandShowcase() {
           <div
             key={i}
             ref={(el) => { cardRefs.current[i] = el; }}
-            className="cursor-pointer overflow-hidden"
+            className="overflow-hidden"
             style={{
               aspectRatio: "1 / 1",
               borderRadius: "clamp(8px, 1vw, 14px)",
@@ -151,9 +151,10 @@ export default function BrandShowcase() {
               backgroundPosition: "center",
               opacity: 0,
               willChange: "transform",
-              display: i === 0 || i === 1 ? "flex" : "block",
+              display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              position: "relative",
             }}
           >
             {i === 0 && (

@@ -101,7 +101,8 @@ export default function Navbar() {
           }}
         >
           <button
-            onClick={() => document.dispatchEvent(new CustomEvent("open-about"))}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onClick={() => (window as any).__openAbout?.()}
             style={{
               padding: "8px 22px",
               fontSize: "13px",
@@ -120,8 +121,11 @@ export default function Navbar() {
             About
           </button>
 
-          {/* Center logo icon */}
-          <div
+          {/* Center logo icon — opens resume */}
+          <button
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onClick={() => (window as any).__openResume?.()}
+            aria-label="View Resume"
             style={{
               width: "38px",
               height: "38px",
@@ -131,14 +135,19 @@ export default function Navbar() {
               alignItems: "center",
               justifyContent: "center",
               flexShrink: 0,
+              border: "none",
+              cursor: "pointer",
+              transition: "opacity 0.2s",
             }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <line x1="3"  y1="17" x2="17" y2="3"  stroke="#3b5ef0" strokeWidth="2.4" strokeLinecap="round"/>
               <line x1="3"  y1="11" x2="11" y2="3"  stroke="#3b5ef0" strokeWidth="2.4" strokeLinecap="round"/>
               <line x1="9"  y1="17" x2="17" y2="9"  stroke="#3b5ef0" strokeWidth="2.4" strokeLinecap="round"/>
             </svg>
-          </div>
+          </button>
 
           <a
             href="#work"

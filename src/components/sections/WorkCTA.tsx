@@ -2,10 +2,26 @@
 
 import { useEffect, useRef } from "react";
 
-/* ── Folder icon (pure CSS) ──────────────────────── */
+/* ── Folder icon (pure CSS, clickable) ───────────── */
 function FolderIcon() {
+  const barHeights = ["58%", "44%", "32%"];
+
   return (
-    <div style={{ position: "relative", width: "clamp(340px, 44vw, 680px)" }}>
+    <button
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onClick={() => (window as any).__openResume?.()}
+      aria-label="View Resume"
+      style={{
+        display: "block",
+        position: "relative",
+        width: "clamp(340px, 44vw, 680px)",
+        background: "none",
+        border: "none",
+        padding: 0,
+        cursor: "pointer",
+        textAlign: "left",
+      }}
+    >
       {/* Back tab */}
       <div style={{
         width: "44%",
@@ -25,7 +41,19 @@ function FolderIcon() {
         boxShadow:
           "0 48px 120px rgba(38,52,210,0.42), 0 12px 32px rgba(38,52,210,0.22)",
         overflow: "hidden",
-      }}>
+        transition: "transform 0.25s ease, box-shadow 0.25s ease",
+      }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLDivElement).style.transform = "scale(1.02)";
+          (e.currentTarget as HTMLDivElement).style.boxShadow =
+            "0 56px 140px rgba(38,52,210,0.55), 0 16px 40px rgba(38,52,210,0.3)";
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLDivElement).style.transform = "scale(1)";
+          (e.currentTarget as HTMLDivElement).style.boxShadow =
+            "0 48px 120px rgba(38,52,210,0.42), 0 12px 32px rgba(38,52,210,0.22)";
+        }}
+      >
         {/* Highlight sheen */}
         <div style={{
           position: "absolute", inset: 0,
@@ -50,31 +78,32 @@ function FolderIcon() {
           Portfolio
         </div>
 
-        {/* Vertical bar decorations */}
-        {[0, 1, 2].map((i) => (
+        {/* Vertical bars — tallest left, shortest right */}
+        {barHeights.map((h, i) => (
           <div key={i} style={{
             position: "absolute",
             bottom: "11%",
-            left: `${28 + i * 14}%`,
+            left: `${30 + i * 14}%`,
             width: "8%",
-            height: "40%",
-            background: "rgba(255,255,255,0.15)",
+            height: h,
+            background: "rgba(255,255,255,0.18)",
             borderRadius: "5px 5px 3px 3px",
           }} />
         ))}
 
-        {/* Center dot */}
+        {/* Dot on top of middle (center) bar */}
         <div style={{
           position: "absolute",
-          top: "47%", left: "50%",
-          transform: "translate(-50%,-50%)",
-          width: "clamp(16px, 1.8vw, 28px)",
-          height: "clamp(16px, 1.8vw, 28px)",
+          bottom: `calc(11% + 44%)`,
+          left: "44%",
+          transform: "translate(-50%, 50%)",
+          width: "clamp(14px, 1.6vw, 24px)",
+          height: "clamp(14px, 1.6vw, 24px)",
           borderRadius: "50%",
-          background: "rgba(255,255,255,0.18)",
+          background: "rgba(255,255,255,0.75)",
         }} />
       </div>
-    </div>
+    </button>
   );
 }
 

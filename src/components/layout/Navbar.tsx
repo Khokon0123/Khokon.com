@@ -100,8 +100,8 @@ export default function Navbar() {
             willChange: "transform",
           }}
         >
-          <a
-            href="#about"
+          <button
+            onClick={() => document.dispatchEvent(new CustomEvent("open-about"))}
             style={{
               padding: "8px 22px",
               fontSize: "13px",
@@ -109,13 +109,16 @@ export default function Navbar() {
               opacity: 0.8,
               borderRadius: "100px",
               transition: "opacity 0.2s",
-              textDecoration: "none",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              fontFamily: "var(--font-inter)",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
             onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.8")}
           >
             About
-          </a>
+          </button>
 
           {/* Center logo icon */}
           <div

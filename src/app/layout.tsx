@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { inter } from "@/lib/fonts";
 import Navbar from "@/components/layout/Navbar";
 import IntroLoader from "@/components/IntroLoader";
+import AboutSection from "@/components/sections/AboutSection";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-bg text-peach" suppressHydrationWarning>
         <IntroLoader />
+        <AboutSection />
         <Navbar />
         {children}
       </body>

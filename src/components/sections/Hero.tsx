@@ -190,7 +190,6 @@ export default function Hero() {
               backgroundImage: "url('/images/onlyswap.png')",
               backgroundSize: "cover",
               backgroundPosition: "center top",
-              border: "1px solid rgba(245, 201, 160, 0.14)",
             }}
           >
             <div

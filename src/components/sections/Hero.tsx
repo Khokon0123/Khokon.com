@@ -8,8 +8,6 @@ export default function Hero() {
   const ceoInnerRef      = useRef<HTMLSpanElement>(null);
   const khokonWrapRef = useRef<HTMLDivElement>(null);
   const barauWrapRef  = useRef<HTMLDivElement>(null);
-  const cardRef       = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let ctx: any;
@@ -22,16 +20,10 @@ export default function Hero() {
       const barauText  = barauWrapRef.current?.querySelector<HTMLElement>(".name-text");
       if (!khokonText || !barauText) return;
 
-      // Secondary text hidden; card starts small and scales up WITH the curtain slide
+      // Secondary text hidden
       gsap.set([softwareLine1Ref.current, softwareLine2Ref.current, ceoInnerRef.current], { y: "115%" });
-      gsap.set(cardRef.current, { scale: 0.82 });
 
       ctx = gsap.context(() => {
-        // Card scales up during the curtain slide (curtain starts at 1.87s, lasts 0.9s)
-        gsap.delayedCall(1.87, () => {
-          gsap.to(cardRef.current, { scale: 1, duration: 0.9, ease: "power2.inOut" });
-        });
-
         // After loader is fully gone (~2.77s), start secondary reveals + idle animations
         gsap.delayedCall(2.8, () => {
           // Clip reveal: Software → Engineer → CEO, staggered
@@ -39,28 +31,17 @@ export default function Hero() {
           gsap.to(softwareLine2Ref.current, { y: "0%", duration: 0.78, ease: "power3.out", delay: 0.1 });
           gsap.to(ceoInnerRef.current,      { y: "0%", duration: 0.78, ease: "power3.out", delay: 0.18 });
 
-          // Card float (Y only — X reserved for parallax)
-          gsap.to(cardRef.current, {
-            y: -12,
-            duration: 3,
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: -1,
-          });
-
           // Cursor parallax — quickTo for 60fps smoothness
-          const kX = gsap.quickTo(khokonText,      "x", { duration: 0.9, ease: "power3.out" });
-          const kY = gsap.quickTo(khokonText,      "y", { duration: 0.9, ease: "power3.out" });
-          const bX = gsap.quickTo(barauText,       "x", { duration: 0.9, ease: "power3.out" });
-          const bY = gsap.quickTo(barauText,       "y", { duration: 0.9, ease: "power3.out" });
-          const cX = gsap.quickTo(cardRef.current, "x", { duration: 1.1, ease: "power3.out" });
+          const kX = gsap.quickTo(khokonText, "x", { duration: 0.9, ease: "power3.out" });
+          const kY = gsap.quickTo(khokonText, "y", { duration: 0.9, ease: "power3.out" });
+          const bX = gsap.quickTo(barauText,  "x", { duration: 0.9, ease: "power3.out" });
+          const bY = gsap.quickTo(barauText,  "y", { duration: 0.9, ease: "power3.out" });
 
           onMouseMove = (e: MouseEvent) => {
             const x = e.clientX / window.innerWidth  - 0.5;
             const y = e.clientY / window.innerHeight - 0.5;
             kX(x * 38); kY(y * 18);
             bX(x * 38); bY(y * 18);
-            cX(x * 58);
           };
 
           window.addEventListener("mousemove", onMouseMove);
@@ -171,43 +152,6 @@ export default function Hero() {
             </span>
           </div>
           <div style={{ height: "clamp(30px, 4vh, 48px)" }} />
-        </div>
-
-        {/* Floating project card — in final position from load */}
-        <div
-          ref={cardRef}
-          className="relative flex-shrink-0"
-          style={{
-            width: "clamp(160px, 16vw, 280px)",
-            marginBottom: "clamp(48px, 7vw, 110px)",
-            willChange: "transform",
-          }}
-        >
-          <div
-            className="rounded-xl overflow-hidden"
-            style={{
-              aspectRatio: "4/3",
-              backgroundImage: "url('/images/onlyswap.png')",
-              backgroundSize: "cover",
-              backgroundPosition: "center top",
-            }}
-          >
-            <div
-              className="w-full h-full flex flex-col items-start justify-end p-4"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(245,201,160,0.1) 0%, rgba(245,201,160,0.03) 100%)",
-              }}
-            >
-              <div className="w-8 h-0.5 rounded-full mb-2" style={{ background: "var(--peach)", opacity: 0.45 }} />
-              <p className="text-xs font-medium" style={{ fontFamily: "var(--font-inter)", color: "var(--peach)", opacity: 0.65 }}>
-                OnlySwap
-              </p>
-              <p className="text-xs mt-0.5" style={{ fontFamily: "var(--font-inter)", color: "var(--peach)", opacity: 0.35 }}>
-                2nd Place · Princeton Hackathon
-              </p>
-            </div>
-          </div>
         </div>
 
         {/* Right column: Barua + CEO */}

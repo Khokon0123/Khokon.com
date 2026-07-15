@@ -146,7 +146,7 @@ export default function BrandShowcase() {
             style={{
               aspectRatio: "1 / 1",
               borderRadius: "clamp(8px, 1vw, 14px)",
-              background: i === 0 ? "#e8f5e8" : i === 1 ? "#eef2f8" : c.bg,
+              background: i === 0 ? "#e8f5e8" : i === 1 ? "#eef2f8" : i === 2 ? "#f0f0f5" : c.bg,
               backgroundSize: "cover",
               backgroundPosition: "center",
               opacity: 0,
@@ -167,6 +167,12 @@ export default function BrandShowcase() {
               <video autoPlay muted loop playsInline style={{ width: "100%", display: "block" }}>
                 <source src="/videos/roombooking.mov" type="video/quicktime" />
                 <source src="/videos/roombooking.mov" type="video/mp4" />
+              </video>
+            )}
+            {i === 2 && (
+              <video autoPlay muted loop playsInline style={{ width: "100%", display: "block" }}>
+                <source src="/images/3rd%20video.mov" type="video/quicktime" />
+                <source src="/images/3rd%20video.mov" type="video/mp4" />
               </video>
             )}
           </div>

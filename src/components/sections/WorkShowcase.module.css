@@ -1,0 +1,224 @@
+.section {
+  background: #f7ede6;
+  padding: clamp(48px, 7vw, 110px) clamp(14px, 1.8vw, 28px) clamp(60px, 8vw, 120px);
+  --font-heading: "Clash Display", "General Sans", sans-serif;
+}
+
+.marqueeWrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  align-items: flex-start;
+  width: fit-content;
+  gap: 22px;
+  animation: marquee 36s linear infinite;
+}
+
+.track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.card {
+  position: relative;
+  /* Section's own horizontal padding is clamp(14px, 1.8vw, 28px) per side —
+     subtract it so 3 cards + a peek of the 4th consistently fit the
+     section's actual content width, not the raw viewport. */
+  width: calc((100vw - 2 * clamp(14px, 1.8vw, 28px) - 2 * 22px) / 3.3);
+  flex-shrink: 0;
+  height: auto;
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid #e7e3d8;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+@media (max-width: 860px) {
+  .card {
+    width: 80vw;
+  }
+}
+
+.card:hover,
+.card:focus-within,
+.card.isOpen {
+  transform: translateY(-5px) scale(1.035);
+  box-shadow: 0 28px 54px rgba(23, 22, 15, 0.22), 0 10px 22px rgba(23, 22, 15, 0.12);
+}
+
+.photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.badge {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #17160f;
+  color: #f2efe6;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.28);
+}
+
+.footer {
+  padding: 16px 18px 18px;
+}
+
+.role {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(18px, 1.9vw, 23px);
+  color: #17160f;
+  line-height: 1.2;
+  margin: 0 0 4px;
+}
+
+.org {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 14px;
+  color: #7a7068;
+  margin: 0;
+}
+
+.period {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 13px;
+  color: #9a9088;
+  margin: 4px 0 0;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: #17160f;
+  color: #f2efe6;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  pointer-events: none;
+}
+
+.card:hover .overlay,
+.card:focus-within .overlay,
+.card.isOpen .overlay {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.overlayRole {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(18px, 1.9vw, 23px);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.overlayMeta {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 13px;
+  opacity: 0.65;
+  margin: 0;
+}
+
+.statsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 13px;
+}
+
+.statValue {
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.statLabel {
+  opacity: 0.65;
+}
+
+.bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+.bullets li {
+  display: flex;
+  gap: 6px;
+}
+
+.bullets li::before {
+  content: "▸";
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.link {
+  align-self: flex-start;
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f2efe6;
+  color: #17160f;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+    transform: translateX(0%);
+  }
+
+  .card,
+  .overlay {
+    transition: none !important;
+  }
+}

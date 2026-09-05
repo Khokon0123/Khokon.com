@@ -204,7 +204,7 @@ export default function WorkShowcase() {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
-    <section className={`${styles.section} ${ibmPlexMono.variable}`}>
+    <section id="work" className={`${styles.section} ${ibmPlexMono.variable}`}>
       <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" />
       <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@500,600,700&display=swap" />
 

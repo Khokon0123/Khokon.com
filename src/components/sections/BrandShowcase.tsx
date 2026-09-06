@@ -245,7 +245,19 @@ export default function BrandShowcase() {
             1,000+ users · 30% fewer conflicts
           </p>
         </div>
-        <div /><div /><div />
+        <div style={{ paddingTop: "clamp(8px, 1vw, 14px)" }}>
+          <p style={{
+            fontFamily: "var(--font-inter)",
+            fontWeight: 800,
+            fontSize: "clamp(16px, 1.5vw, 26px)",
+            color: "#7a7068",
+            margin: 0,
+            lineHeight: 1.2,
+          }}>
+            Green Chili
+          </p>
+        </div>
+        <div /><div />
       </div>
     </section>
   );

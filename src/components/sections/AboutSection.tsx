@@ -2,6 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 
+const journeyPhotos = [
+  "/images/khokon.jpg",
+  "/images/WhatsApp Image 2026-09-07 at 14.05.04.jpeg",
+];
+
 const milestones = [
   {
     year: "Bangladesh",
@@ -27,6 +32,7 @@ const milestones = [
 
 export default function AboutSection() {
   const [visible, setVisible] = useState(false);
+  const [activePhoto, setActivePhoto] = useState(0);
   const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const photoRef   = useRef<HTMLDivElement>(null);
@@ -40,6 +46,15 @@ export default function AboutSection() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return () => { delete (window as any).__openAbout; };
   }, []);
+
+  useEffect(() => {
+    if (!visible) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = setInterval(() => {
+      setActivePhoto((i) => (i + 1) % journeyPhotos.length);
+    }, 4500);
+    return () => clearInterval(id);
+  }, [visible]);
 
   useEffect(() => {
     if (!overlayRef.current) return;
@@ -297,20 +312,27 @@ export default function AboutSection() {
             aspectRatio: "3/4",
             position: "relative",
           }}>
-            {/* Photo */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/khokon.jpg"
-              alt="Khokon Barua"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "center top",
-                filter: "brightness(0.88) contrast(1.05) saturate(0.8) sepia(0.18)",
-                display: "block",
-              }}
-            />
+            {/* Photo slideshow */}
+            {journeyPhotos.map((src, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={src}
+                src={src}
+                alt="Khokon Barua"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: "center top",
+                  filter: "brightness(0.88) contrast(1.05) saturate(0.8) sepia(0.18)",
+                  opacity: i === activePhoto ? 1 : 0,
+                  transition: "opacity 1s ease",
+                  display: "block",
+                }}
+              />
+            ))}
 
             {/* Warm peach overlay to match site palette */}
             <div style={{
